@@ -144,4 +144,3 @@ module.exports = (robot) ->
 
   robot.hear /お前は(何|なに|ナニ)を/, (msg) ->
     msg.send msg.random omaeha
-
