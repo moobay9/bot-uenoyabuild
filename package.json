@@ -21,6 +21,7 @@
     "node": "0.10.x"
   },
   "devDependencies": {
+    "eastasianwidth": "^0.1.1",
     "hubot-slack": "^4.3.4"
   }
 }
