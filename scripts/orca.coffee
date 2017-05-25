@@ -57,6 +57,12 @@ module.exports = (robot) ->
     robot.brain.save()
     putList(msg)
 
+  robot.respond /orca clear/i, (msg) ->
+    orca = robot.brain.get "orca"
+    orca.macs = []
+    robot.brain.set("orca", orca)
+    robot.brain.save()
+
   robot.respond /orca (remove|delete) (.*)/i, (msg) ->
     orca = robot.brain.get "orca"
     user = msg.match[2]
