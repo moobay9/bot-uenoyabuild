@@ -62,6 +62,7 @@ module.exports = (robot) ->
     orca.macs = []
     robot.brain.set("orca", orca)
     robot.brain.save()
+    msg.send "現在の在室情況をクリアしたよ！"
 
   robot.respond /orca (remove|delete) (.*)/i, (msg) ->
     orca = robot.brain.get "orca"

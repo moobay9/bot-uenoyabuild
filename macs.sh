@@ -20,11 +20,12 @@ send \"console character ascii\r\"
 expect \">\"
 send \"console lines infinity\r\"
 expect \">\"
-send \"show status dhcp\r\"
+send \"show arp\r\"
 expect \">\"
 send \"exit\r\"
 close
-" | grep "Client ID" | sed -e  "s/^.*: ([0-9]*) //g" | sed -e "s/ /:/g" > /tmp/.macs.txt
+" | grep -E "^LAN[1-3]" | awk '{print $3}' > /tmp/.macs.txt
+# " | grep "Client ID" | sed -e  "s/^.*: ([0-9]*) //g" | sed -e "s/ /:/g" > /tmp/.macs.txt
 
 while read line
 do
