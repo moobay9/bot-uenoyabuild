@@ -66,6 +66,11 @@ takasan = [
   "< 参考になります！"
 ]
 
+friends = [
+  "< たーのしー！"
+  "< 君は過重労働が大好きなフレンズなんだね！"
+ ]
+
 eastasianwidth = require 'eastasianwidth'
 
 strpad = (str, count) ->
@@ -94,15 +99,21 @@ module.exports = (robot) ->
   robot.hear /ktkr/i, (msg) ->
     msg.send msg.random ktkr_text
 
-  robot.hear /なよ$/, (msg) ->
+  robot.hear /^すごーい/, (msg) ->
     channel = msg.envelope.room
-    request = msg.http("https://slack.com/api/chat.postMessage?token=#{process.env.SLACK_API_TOKEN}&channel=#{channel}&text=%3C%20%E5%BC%B1%E3%81%8F%E8%A6%8B%E3%81%88%E3%82%8B%E3%81%9E&username=%E8%97%8D%E6%9F%93%E6%83%A3%E5%8F%B3%E4%BB%8B&icon_url=https%3A%2F%2Fqiita-image-store.s3.amazonaws.com%2F222%2F20074%2Fc9c07f06-3a6c-6cb4-1e81-5217b49a5184.png&pretty=1").get()
+    message = msg.random friends
+    request = msg.http("https://slack.com/api/chat.postMessage?token=#{process.env.SLACK_API_TOKEN}&channel=#{channel}&text=#{message}&username=%E3%82%B5%E3%83%BC%E3%83%90%E3%83%AB%E3%81%A1%E3%82%83%E3%82%93&pretty=1").get()
     request (err, res, body) ->
 
-  robot.hear /霊圧/, (msg) ->
-    channel = msg.envelope.room
-    request = msg.http("https://slack.com/api/chat.postMessage?token=#{process.env.SLACK_API_TOKEN}&channel=#{channel}&text=%3C%20%E3%81%AA%E3%82%93%E3%83%BB%E3%83%BB%E3%83%BB%E3%81%A0%E3%81%A8%E3%83%BB%E3%83%BB%E3%83%BB&username=%E9%BB%92%E5%B4%8E%E4%B8%80%E8%AD%B7&icon_url=https%3A%2F%2Fqiita-image-store.s3.amazonaws.com%2F222%2F20074%2Fe162010c-a600-f002-7af0-b7ff93d55a0d.png&pretty=1").get()
-    request (err, res, body) ->
+  # robot.hear /なよ$/, (msg) ->
+  #   channel = msg.envelope.room
+  #   request = msg.http("https://slack.com/api/chat.postMessage?token=#{process.env.SLACK_API_TOKEN}&channel=#{channel}&text=%3C%20%E5%BC%B1%E3%81%8F%E8%A6%8B%E3%81%88%E3%82%8B%E3%81%9E&username=%E8%97%8D%E6%9F%93%E6%83%A3%E5%8F%B3%E4%BB%8B&icon_url=https%3A%2F%2Fqiita-image-store.s3.amazonaws.com%2F222%2F20074%2Fc9c07f06-3a6c-6cb4-1e81-5217b49a5184.png&pretty=1").get()
+  #   request (err, res, body) ->
+  # 
+  # robot.hear /霊圧/, (msg) ->
+  #   channel = msg.envelope.room
+  #   request = msg.http("https://slack.com/api/chat.postMessage?token=#{process.env.SLACK_API_TOKEN}&channel=#{channel}&text=%3C%20%E3%81%AA%E3%82%93%E3%83%BB%E3%83%BB%E3%83%BB%E3%81%A0%E3%81%A8%E3%83%BB%E3%83%BB%E3%83%BB&username=%E9%BB%92%E5%B4%8E%E4%B8%80%E8%AD%B7&icon_url=https%3A%2F%2Fqiita-image-store.s3.amazonaws.com%2F222%2F20074%2Fe162010c-a600-f002-7af0-b7ff93d55a0d.png&pretty=1").get()
+  #   request (err, res, body) ->
 
   robot.hear /^たかさん$/i, (msg) ->
      channel = msg.envelope.room
