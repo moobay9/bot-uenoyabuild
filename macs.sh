@@ -29,8 +29,7 @@ close
 
 while read line
 do
-    TMP_LINE=`echo ${line} | sed -e "s//,/g"`
-    MACS=${MACS}${TMP_LINE}
+    TMP_LINE=`echo ${line} | sed -e "s/$/,/g"`    MACS=${MACS}${TMP_LINE}
 done < /tmp/.macs.txt
 
 MACS=`echo ${MACS} | sed -e "s/,$//g"`
