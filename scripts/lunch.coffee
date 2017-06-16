@@ -31,8 +31,41 @@ module.exports = (robot) ->
     lunch = robot.brain.get("lunch")
     text = "登録されてるご飯処です〜\n"
     for key, shop of lunch.shops
-      text += "{key: #{shop.key}, shop: #{shop.shop}, weight: #{shop.weight}}\n"
+      text += "key: #{shop.key}, お店: #{shop.shop}, 重み: #{shop.weight}\n"
     msg.send text
+
+  putShop = (msg) ->
+    lunch = robot.brain.get "lunch"
+    shops = lunch.shops
+    total = 0
+    score = 0
+
+    shops.sort (a, b) ->
+      (if parseInt(a.weight, 10) < parseInt(b.weight, 10) then 1 else -1)
+
+    robot.logger.debug shops
+
+    # SUM
+    for k, shop of shops
+      total += parseInt(shop.weight, 10)
+    
+    robot.logger.debug "total: #{total}"
+
+    # Weight
+    for k, shop of shops
+      weight = Math.random() * total
+      score += parseInt(shop.weight, 10)
+
+      robot.logger.debug "weight: #{weight}"
+      robot.logger.debug "score:  #{score}"
+
+      if weight < score
+        text = shop.shop
+        break
+
+    msg.send "今日のお昼はこちら！\n #{text}"
+
+
 
   robot.respond /lunch add (.*) (.*) (.*)/i, (msg) ->
     key    = msg.match[1]
@@ -73,32 +106,7 @@ module.exports = (robot) ->
     putList(msg)
 
   robot.respond /lunch select/i, (msg) ->
-    lunch = robot.brain.get "lunch"
-    shops = lunch.shops
-    total = 0
-    score = 0
+    putShop(msg)
 
-    shops.sort (a, b) ->
-      (if parseInt(a.weight, 10) < parseInt(b.weight, 10) then 1 else -1)
-
-    robot.logger.debug shops
-
-    # SUM
-    for k, shop of shops
-      total += parseInt(shop.weight, 10)
-    
-    robot.logger.debug "total: #{total}"
-
-    # Weight
-    for k, shop of shops
-      weight = Math.random() * total
-      score += parseInt(shop.weight, 10)
-
-      robot.logger.debug "weight: #{weight}"
-      robot.logger.debug "score:  #{score}"
-
-      if weight < score
-        text = shop.shop
-        break
-
-    msg.send "今日のお昼はこちら！\n #{text}"
+  robot.hear /おなかすいた/, (msg) ->
+    putShop(msg)
