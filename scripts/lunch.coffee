@@ -102,6 +102,14 @@ module.exports = (robot) ->
         robot.brain.set "lunch", lunch
     putList(msg)
 
+  robot.respond /lunch destroy/i, (msg) ->
+    lunch = robot.brain.get "lunch"
+    for k, shop of lunch.shops
+      robot.logger.debug k
+      lunch.shops.splice(k, 1)
+      robot.brain.set "lunch", lunch
+    putList(msg)
+
   robot.respond /lunch list/i, (msg) ->
     putList(msg)
 
